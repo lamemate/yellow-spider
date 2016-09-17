@@ -17,3 +17,4 @@ class YellowItem(Item):
     addressLocality = Field()
     mail = Field()
     website = Field()
+    subscriberId = Field()

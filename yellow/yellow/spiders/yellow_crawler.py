@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy
+
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.http import Request
@@ -15,6 +15,7 @@ class YellowCrawlerSpider(CrawlSpider):
         "http://www.gelbeseiten.de/wohnungsverwaltung/berlin",
         "http://www.gelbeseiten.de/wohnungsgenossenschaften/berlin",
         "http://www.gelbeseiten.de/wohnungsgesellschaften/berlin",
+        "http://www.gelbeseiten.de/wohnungsunternehmen/berlin"
     ]
 
     rules = (
@@ -30,4 +31,5 @@ class YellowCrawlerSpider(CrawlSpider):
             item['addressLocality'] = box.xpath('div//span[@itemprop="addressLocality"]/text()').extract()
             item['mail'] = box.xpath('div//span[@itemprop="email"]/text()').extract()
             item['website'] = box.xpath('div//div[contains(@class, "B")]//li[contains(@class, "website")]/a/span/text()').extract()
+            item['subscriberId'] = box.xpath('div//a[contains(@class, "teilnehmername")]/@href').extract()[0][30:40]
             yield item
